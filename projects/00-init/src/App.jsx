@@ -2,33 +2,38 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { TwitterFollowCard } from './TwitterFollowCard'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const formatUserName = (userName) => `@${userName}`
+
+  const users = [
+    {userName: 'Pepe', name: 'Jose', isFollowing: true},
+    {userName: 'Migue', name: 'Miguel', isFollowing: false},
+    {userName: 'Manu', name: 'Manuel', isFollowing: true},
+  ]
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <section className='App'>
+      {
+        users.map(user =>{
+          const {userName, name, isFollowing } = user
+
+          return(
+            <TwitterFollowCard
+            key={`${userName}+`}
+              userName={userName}
+              isFollowing={isFollowing}
+              >
+              {name}
+              <div>
+                {formatUserName(userName)}
+              </div>
+            </TwitterFollowCard>
+          )
+        })
+      }
+    </section>
   )
 }
 
